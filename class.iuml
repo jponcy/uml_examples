@@ -1,0 +1,101 @@
+@startuml First
+!include ./config/params.iuml
+
+class Utilisateur {
+    -nom: string
+    -prenom: string
+    -dateDeNaissance: Date[0..1]
+}
+
+class Article {
+    -reference: string {readOnly}
+    -prix: float
+    ' -auteur: Utilisateur
+}
+
+class DocumentArticle {
+    -nom: string
+    ' Chemin vers le fichier physique
+    -chemin: string
+}
+
+class Application {
+    {static} +main(args: string[*]): void
+}
+
+Utilisateur "-auteur" <- Article
+
+Article "1" -- "*\n -documents" DocumentArticle
+
+Application .left.> Article: depends de >
+Application .left.> DocumentArticle
+@enduml
+
+
+@startuml compositionVsAggregation
+!include ./config/params.iuml
+
+class A
+class B
+
+A *-> B: composition >
+
+C o-> "*" D: aggregation >
+
+
+Humain *-> "1" Coeur
+
+
+class Livre {
+    -nombreDePage: int
+}
+@enduml
+
+@startuml héritage
+!include ./config/params.iuml
+interface MonInterface <<interface>>
+
+class ClasseEnfant extends ClasseParent implements MonInterface
+
+note left: Mon commentaire
+@enduml
+
+@startuml abstract
+!include ./config/params.iuml
+
+class Parent <<abstract>> {
+    {abstract} +calculerPosition(): int
+}
+
+class Enfant extends Parent {
+    +calculerPosition(): int
+}
+
+class Animal <<abstract>> {
+    {abstract} +communiquer()
+    {abstract} +seDeplacer()
+}
+
+class AnimalMarrin <<abstract>> extends Animal {
+    +seDeplacer()
+}
+
+class TortueDeMer extends AnimalMarrin {
+    +communiquer()
+    ' +seDeplacer() Si pas mis, alors on concerve l'implémentation d'animal marrin
+}
+@enduml
+
+@startuml Classe D'asso
+!include ./config/params.iuml
+
+Personne "*" - "*" Emploi
+(Personne, Emploi) .. PosteOccupe
+
+Personne2 "1" <- "*" PosteOccupe2
+PosteOccupe2 "*" -> "1" Emploi2
+@enduml
+
+@startuml
+!include ./config/params.iuml
+@enduml

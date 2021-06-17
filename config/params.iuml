@@ -1,0 +1,84 @@
+@startsalt Params
+' scale 750 width
+
+skinparam RoundCorner 15
+
+skinparam title {
+  BorderRoundCorner   100
+  BorderThickness     2
+  BorderColor         Aqua-CadetBlue
+  BackgroundColor     Aqua-CadetBlue
+}
+
+skinparam LegendBackgroundColor #EEF
+
+skinparam enum {
+  BackgroundColor     AliceBlue-LightBlue
+  Color               White
+}
+
+skinparam class {
+  BackgroundColor LightYellow-White
+  BackgroundColor<<entity>> LightYellow-Orange
+  BackgroundColor<<resource>> AliceBlue-LightYellow
+  BorderColor Gray-Silver
+}
+
+skinparam interface {
+  BackgroundColor LightYellow-White
+  BackgroundColor<<entity>> LightYellow-Orange
+  BorderColor Gray-Silver
+}
+' skinparam InterfaceBackgroundColor Red
+
+skinparam arrow {
+  Color Black
+  FontSize 8
+  Thickness 0.4
+}
+
+skinparam componentStyle uml2
+
+' hide class methods
+hide class circle
+hide interface attributes
+hide interface circle
+hide enum methods
+
+
+
+' *********************
+' CUSTOM RENDER OPTIONS
+' ---------------------
+
+!ternaryNotification  = %false()
+!ternaryLanguage      = 1
+!ternaryEvent         = 1
+
+!drawEnum             = 1
+!detailResources      = 0
+
+
+
+' ****************
+' COMMON FUNCTIONS
+' ----------------
+
+!unquoted procedure feature($featureName)
+
+  ' ' !if (%file_exists("./" + $featureName + ".iuml"))
+  '   !include $featureName##.iuml
+  ' ' !else
+  ' '   !include features/##$featureName##.iuml
+  ' ' !endif
+  !if (%filename() == "main.iuml" || %filename() == "roadmap.iuml")
+    !include features/##$featureName##.iuml
+  !else
+    !include ##$featureName##.iuml
+  !endif
+!endprocedure
+
+!unquoted procedure secondary($class)
+class $class #Lime-LightGreen
+!endprocedure
+@endsalt
